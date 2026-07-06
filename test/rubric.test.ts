@@ -99,4 +99,12 @@ describe('aggregate', () => {
     expect(agg.byCategory['lang:en']).toEqual({ passed: 2, total: 2 });
     expect(agg.byCategory['lang:he']).toEqual({ passed: 1, total: 2 });
   });
+
+  it('handles an empty result set without dividing by zero', () => {
+    const agg = aggregate([]);
+    expect(agg.total).toBe(0);
+    expect(agg.passed).toBe(0);
+    expect(agg.passRate).toBe(0);
+    expect(agg.byCategory).toEqual({});
+  });
 });

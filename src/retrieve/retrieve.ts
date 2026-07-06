@@ -6,8 +6,7 @@
  * without a Voyage key; `retrieve` wraps it with query embedding + rerank.
  */
 import { query, toVectorLiteral } from '../db/client.js';
-import { embedQuery } from '../lib/voyage.js';
-import { rerankDocuments } from '../lib/voyage.js';
+import { embedQuery, rerankDocuments } from '../lib/voyage.js';
 
 export interface RetrievalConfig {
   corpusId: number;
@@ -89,6 +88,11 @@ export async function retrieve(
     pool.map((c) => c.content),
     cfg.topK,
   );
-  const chunks = hits.map((h) => pool[h.index]).filter((c): c is RetrievedChunk => Boolean(c));
+  // Defensive slice: keep top-k even if the reranker returns the full pool
+  // (the Voyage rerank field names were flagged unverified in docs/plan.md §1.2).
+  const chunks = hits
+    .map((h) => pool[h.index])
+    .filter((c): c is RetrievedChunk => Boolean(c))
+    .slice(0, cfg.topK);
   return { chunks, embeddingTokens, rerankTokens };
 }

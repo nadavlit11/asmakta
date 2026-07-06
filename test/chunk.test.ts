@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { chunkDocument, splitSentences } from '../src/ingest/chunk.js';
+import { chunkDocument, splitSentences, splitSections } from '../src/ingest/chunk.js';
 import { DEFAULT_CHUNK_STRATEGY, type ParsedDocument } from '../src/ingest/types.js';
 
 const ctx = { documentId: 1, corpusId: 1, corpusVersion: 1 };
@@ -8,6 +8,7 @@ describe('splitSentences', () => {
   it('splits English and Hebrew on terminators', () => {
     expect(splitSentences('One. Two! Three?')).toEqual(['One.', 'Two!', 'Three?']);
     expect(splitSentences('שלום עולם. מה שלומך?')).toEqual(['שלום עולם.', 'מה שלומך?']);
+    expect(splitSentences('פסוק ראשון׃ פסוק שני׃')).toEqual(['פסוק ראשון׃', 'פסוק שני׃']); // sof pasuq
     expect(splitSentences('no terminator here')).toEqual(['no terminator here']);
   });
 });
@@ -64,15 +65,44 @@ describe('chunkDocument', () => {
     expect(chunks.every((c) => c.tokenCount > 0)).toBe(true);
   });
 
-  it('produces overlap between consecutive chunks', () => {
-    const sentences = Array.from({ length: 12 }, (_, i) => `Sentence number ${i} has several words in it.`).join(' ');
+  it('produces overlap between consecutive chunks (and none when disabled)', () => {
+    // Uniquely-numbered sentences so a shared sentence proves real overlap.
+    const sentences = Array.from({ length: 12 }, (_, i) => `Sentence number ${i} has several distinct words.`).join(' ');
     const parsed: ParsedDocument = { text: sentences, detectedLang: 'en', charCount: sentences.length };
-    const chunks = chunkDocument(parsed, { ...DEFAULT_CHUNK_STRATEGY, targetTokens: 20, overlapTokens: 8 }, ctx);
-    expect(chunks.length).toBeGreaterThan(1);
-    // The end of chunk N should share text with the start of chunk N+1.
-    const first = chunks[0]!.content;
-    const second = chunks[1]!.content;
-    const lastWordOfFirst = first.split(' ').slice(-3).join(' ');
-    expect(second.includes(lastWordOfFirst.split(' ')[0]!)).toBe(true);
+    const sentsOf = (content: string) => new Set(content.match(/Sentence number \d+/g) ?? []);
+
+    const withOverlap = chunkDocument(parsed, { ...DEFAULT_CHUNK_STRATEGY, targetTokens: 20, overlapTokens: 10 }, ctx);
+    expect(withOverlap.length).toBeGreaterThan(1);
+    const wo0 = sentsOf(withOverlap[0]!.content);
+    const wo1 = sentsOf(withOverlap[1]!.content);
+    expect([...wo0].some((s) => wo1.has(s))).toBe(true); // a sentence is shared -> overlap
+
+    // Control: with overlap disabled, consecutive chunks must share no sentence.
+    const noOverlap = chunkDocument(parsed, { ...DEFAULT_CHUNK_STRATEGY, targetTokens: 20, overlapTokens: 0 }, ctx);
+    const no0 = sentsOf(noOverlap[0]!.content);
+    const no1 = sentsOf(noOverlap[1]!.content);
+    expect([...no0].some((s) => no1.has(s))).toBe(false);
+  });
+
+  it('emits an own chunk for a single sentence that exceeds the target', () => {
+    const longSentence = `This is one very long sentence with many many many words that on its own exceeds the small token target we set`;
+    const parsed: ParsedDocument = { text: longSentence, detectedLang: 'en', charCount: longSentence.length };
+    const chunks = chunkDocument(parsed, { ...DEFAULT_CHUNK_STRATEGY, targetTokens: 5 }, ctx);
+    expect(chunks).toHaveLength(1);
+    expect(chunks[0]!.content).toBe(longSentence);
+  });
+});
+
+describe('splitSections', () => {
+  it('treats text before the first heading as one untitled section', () => {
+    const secs = splitSections('Intro line without a heading.\n\n# Real Heading\n\nBody under heading.');
+    expect(secs[0]!.heading).toBeUndefined();
+    expect(secs[0]!.text).toContain('Intro line');
+    expect(secs[1]!.heading).toBe('Real Heading');
+  });
+  it('returns a single untitled section when there are no headings', () => {
+    const secs = splitSections('Just a paragraph.\n\nAnd another.');
+    expect(secs).toHaveLength(1);
+    expect(secs[0]!.heading).toBeUndefined();
   });
 });

@@ -23,8 +23,6 @@ export const DEFAULT_MODELS = {
   utility: 'claude-haiku-4-5',
 } as const;
 
-export type ModelRole = keyof typeof DEFAULT_MODELS;
-
 // ---- Pricing tables (USD per 1M tokens) ----
 
 export interface ChatPrice {

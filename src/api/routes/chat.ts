@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { getCorpusBySlug } from '../../db/queries.js';
 import { retrieve, DEFAULT_RETRIEVAL, type RetrievalConfig } from '../../retrieve/retrieve.js';
 import { answer } from '../../answer/answer.js';
-import { embeddingCost } from '../../lib/cost.js';
+import { embeddingCost, rerankCost } from '../../lib/cost.js';
 import { resolveModels } from '../../config/models.js';
 
 const ChatBody = z.object({
@@ -32,9 +32,10 @@ export async function chatRoutes(app: FastifyInstance): Promise<void> {
 
     const started = Date.now();
     try {
-      const { chunks, embeddingTokens } = await retrieve(body.question, cfg);
+      const { chunks, embeddingTokens, rerankTokens } = await retrieve(body.question, cfg);
       const ans = await answer(body.question, chunks);
       const latencyMs = Date.now() - started;
+      const models = resolveModels();
 
       const citations = ans.citations.map((c) => {
         const rc = chunks.find((x) => x.chunkId === c.chunkId);
@@ -60,7 +61,9 @@ export async function chatRoutes(app: FastifyInstance): Promise<void> {
           content: c.content.slice(0, 240),
         })),
         usage: ans.usage,
-        costUsd: Number((ans.costUsd + embeddingCost(resolveModels().embedding, embeddingTokens)).toFixed(6)),
+        costUsd: Number(
+          (ans.costUsd + embeddingCost(models.embedding, embeddingTokens) + rerankCost(models.rerank, rerankTokens)).toFixed(6),
+        ),
         latencyMs,
         model: ans.model,
       };

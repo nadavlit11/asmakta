@@ -11,6 +11,9 @@ import { z } from 'zod';
 
 const EnvSchema = z.object({
   DATABASE_URL: z.string().min(1, 'DATABASE_URL is required'),
+  // Verify the DB server's TLS certificate by default. Set to 'true' only if a
+  // host presents a cert not chained to a public CA (rare; Neon works verified).
+  DATABASE_SSL_NO_VERIFY: z.enum(['true', 'false']).default('false'),
   ANTHROPIC_API_KEY: z.string().optional(),
   VOYAGE_API_KEY: z.string().optional(),
   ADMIN_TOKEN: z.string().optional(),

@@ -14,8 +14,11 @@ export function getPool(): pg.Pool {
   const env = loadEnv();
   pool = new Pool({
     connectionString: env.DATABASE_URL,
-    // Neon and most managed hosts require TLS; a local dev cluster does not.
-    ssl: env.DATABASE_URL.includes('sslmode=require') ? { rejectUnauthorized: false } : undefined,
+    // Neon and most managed hosts require TLS (verified by default); a local dev
+    // cluster does not. DATABASE_SSL_NO_VERIFY=true relaxes verification if needed.
+    ssl: env.DATABASE_URL.includes('sslmode=require')
+      ? { rejectUnauthorized: env.DATABASE_SSL_NO_VERIFY !== 'true' }
+      : undefined,
     max: 10,
   });
   return pool;

@@ -70,9 +70,10 @@ export async function answer(
     return refuse(lang, model, usage, costUsd);
   }
 
-  // (3) Drop invented citations; enforce "no source, no answer".
+  // (3) Drop invented citations; enforce "no source, no answer". Also refuse an
+  // empty answer body (a non-refused answer must actually say something).
   const validIds = validateCitations(parsed.citations, retrieved);
-  if (validIds.length === 0) {
+  if (validIds.length === 0 || parsed.answer.trim() === '') {
     return refuse(lang, model, usage, costUsd);
   }
 

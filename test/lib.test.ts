@@ -6,6 +6,7 @@ describe('tokens: language heuristics', () => {
   it('detects Hebrew vs English', () => {
     expect(hebrewRatio('shalom')).toBe(0);
     expect(hebrewRatio('שלום')).toBe(1);
+    expect(hebrewRatio('12 :: 34 !!')).toBe(0); // no letters -> 0, no divide-by-zero
     expect(detectChunkLang('כמה ימי חופשה מגיעים לי')).toBe('he');
     expect(detectChunkLang('How many vacation days')).toBe('en');
   });
@@ -36,9 +37,11 @@ describe('cost accounting', () => {
     expect(chatCost('nope', 1000, 1000)).toBe(0);
   });
 
-  it('prices embeddings + rerank', () => {
+  it('prices embeddings + rerank; unknown model -> 0', () => {
     expect(embeddingCost('voyage-4-lite', 1_000_000)).toBeCloseTo(0.02, 6);
     expect(rerankCost('rerank-2.5', 1_000_000)).toBeCloseTo(0.05, 6);
+    expect(embeddingCost('nope', 1_000_000)).toBe(0);
+    expect(rerankCost('nope', 1_000_000)).toBe(0);
   });
 
   it('accumulates and guards a cap', () => {

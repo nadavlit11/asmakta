@@ -36,8 +36,11 @@ export interface ParsedDocument {
 export interface ChunkStrategy {
   targetTokens: number; // default 350
   overlapTokens: number; // default 60
-  splitOn: 'heading' | 'paragraph' | 'recursive'; // default 'recursive'
-  respectSentences: boolean; // default true
+  // Reserved for future chunkers. The current chunker (src/ingest/chunk.ts)
+  // always splits at heading boundaries and never breaks a sentence, so these
+  // two fields are not yet read — kept so the strategy stays forward-compatible.
+  splitOn: 'heading' | 'paragraph' | 'recursive';
+  respectSentences: boolean;
 }
 
 export const DEFAULT_CHUNK_STRATEGY: ChunkStrategy = {
@@ -69,5 +72,3 @@ export interface Chunk {
 export interface EmbeddedChunk extends Chunk {
   embedding: number[]; // length EMBEDDING_DIM (1024)
 }
-
-export type Parser = (doc: RawDocument) => Promise<ParsedDocument>;
