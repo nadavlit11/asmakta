@@ -1,5 +1,7 @@
 # BRIEF — rag-assistant: produce the implementation plan
 
+> **Current state (updated 2026-07-06): DONE.** The implementation plan is complete and committed at [`docs/plan.md`](docs/plan.md). Product name **Asmakta**; corpus **Israeli labor/employment rights**; eval target **90%**; monthly ceiling **~$5**. The next task is implementation, not planning — see `docs/plan.md` §8 for the commit sequence. This brief is retained as historical context for how the plan was scoped.
+
 You (Claude Fable) are being used for PLANNING ONLY. The plan you write will be executed by **Opus 4.8 sessions with zero memory of this session** — write for a competent implementer who knows nothing about this project beyond what's in this repo.
 
 ## Context

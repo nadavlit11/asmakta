@@ -2,7 +2,7 @@
 
 One of Nadav's freelance portfolio projects (backend dev going freelance; portfolio strategy derived from a July 2026 XPlace market scan).
 
-**Current state: no code yet. The first and only pending task is producing the implementation plan.** When Nadav says "run", "start", "make the plan", or anything similar — read `BRIEF.md` and follow it exactly. The brief's constraints (PLAN ONLY, no application code) override any instinct to start building.
+**Current state: implementation plan complete → [`docs/plan.md`](docs/plan.md). Planning is done; the next task is implementation, by fresh Opus 4.8 sessions.** When Nadav says "run", "start", "build", or "next commit" — read `docs/plan.md` and execute its commit sequence (§8) in order: one `/kit:worktree` branch per commit, each commit's done-probe passing, `/kit:code-review` before every commit. From commit C9 onward, any change to prompts/retrieval/chunking/rerank must re-run `npm run eval` and report the pass-rate in the commit body. `BRIEF.md` holds the original planning brief (historical context).
 
 ## Durable project rules
 
