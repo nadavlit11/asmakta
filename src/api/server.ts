@@ -8,6 +8,10 @@ import multipart from '@fastify/multipart';
 import { loadEnv, corsOrigins } from '../config/env.js';
 import { pingDb, closePool } from '../db/client.js';
 import { isMainModule } from '../lib/runtime.js';
+import { corpusRoutes } from './routes/corpus.js';
+import { documentRoutes } from './routes/documents.js';
+import { chatRoutes } from './routes/chat.js';
+import { evalRoutes } from './routes/eval.js';
 
 export async function buildServer(): Promise<FastifyInstance> {
   const env = loadEnv();
@@ -21,11 +25,10 @@ export async function buildServer(): Promise<FastifyInstance> {
     return { ok: db, db: db ? 'up' : 'down' };
   });
 
-  // Route modules (registered at C10):
-  //   await app.register(documentRoutes, { prefix: '/api/documents' });
-  //   await app.register(corpusRoutes,    { prefix: '/api/corpus' });
-  //   await app.register(chatRoutes,      { prefix: '/api/chat' });
-  //   await app.register(evalRoutes,      { prefix: '/api/eval' });
+  await app.register(documentRoutes, { prefix: '/api/documents' });
+  await app.register(corpusRoutes, { prefix: '/api/corpus' });
+  await app.register(chatRoutes, { prefix: '/api/chat' });
+  await app.register(evalRoutes, { prefix: '/api/eval' });
 
   return app;
 }

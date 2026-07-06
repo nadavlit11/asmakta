@@ -171,3 +171,50 @@ export async function corpusStatus(slug: string): Promise<CorpusStatus | null> {
 export async function deleteDocument(id: number): Promise<void> {
   await query('DELETE FROM documents WHERE id = $1', [id]);
 }
+
+export interface DocumentDetail {
+  id: number;
+  corpusId: number;
+  version: number;
+  filename: string;
+  mimeType: string;
+  sourceLang: string;
+  status: string;
+  error: string | null;
+  pageCount: number | null;
+  charCount: number | null;
+  chunkCount: number;
+  indexedAt: string | null;
+  createdAt: string;
+}
+
+export async function getDocumentById(id: number): Promise<DocumentDetail | null> {
+  const { rows } = await query<{
+    id: string; corpus_id: string; version: number; filename: string; mime_type: string;
+    source_lang: string; status: string; error: string | null; page_count: number | null;
+    char_count: number | null; chunk_count: string; indexed_at: string | null; created_at: string;
+  }>(
+    `SELECT d.id, d.corpus_id, d.version, d.filename, d.mime_type, d.source_lang, d.status,
+            d.error, d.page_count, d.char_count, COUNT(c.id) AS chunk_count, d.indexed_at, d.created_at
+     FROM documents d LEFT JOIN chunks c ON c.document_id = d.id
+     WHERE d.id = $1 GROUP BY d.id`,
+    [id],
+  );
+  const r = rows[0];
+  if (!r) return null;
+  return {
+    id: Number(r.id),
+    corpusId: Number(r.corpus_id),
+    version: r.version,
+    filename: r.filename,
+    mimeType: r.mime_type,
+    sourceLang: r.source_lang,
+    status: r.status,
+    error: r.error,
+    pageCount: r.page_count,
+    charCount: r.char_count,
+    chunkCount: Number(r.chunk_count),
+    indexedAt: r.indexed_at,
+    createdAt: r.created_at,
+  };
+}
