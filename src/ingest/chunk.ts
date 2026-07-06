@@ -1,14 +1,15 @@
 /**
- * Recursive, sentence-respecting chunker with overlap and heading tracking.
- * See docs/plan.md §3.
+ * Recursive, sentence-respecting chunker with heading-boundary splitting and
+ * overlap. See docs/plan.md §3.
  *
  * - PDFs are chunked per page so citations get a clean page number; other formats
- *   are chunked over the full text (no page numbers).
- * - Markdown-style heading lines (`#`..`######`) set the "nearest heading"
- *   attached to subsequent chunks. The HTML parser emits headings in this form.
+ *   are chunked over the full text.
+ * - Markdown-style heading lines (`#`..`######`) start a new section; each
+ *   section becomes one or more chunks carrying that heading. This gives
+ *   section-level citation precision. The HTML parser emits headings in this form.
  * - Sentences are never split (unless a single sentence exceeds the target, in
  *   which case it becomes its own chunk). Overlap carries trailing sentences into
- *   the next chunk for retrieval continuity.
+ *   the next chunk within a section for retrieval continuity.
  */
 import type { Chunk, ChunkContext, ChunkStrategy, ParsedDocument } from './types.js';
 import { estimateTokens, detectChunkLang } from '../lib/tokens.js';
@@ -16,7 +17,11 @@ import { estimateTokens, detectChunkLang } from '../lib/tokens.js';
 interface Unit {
   text: string;
   tokens: number;
+}
+
+interface Section {
   heading?: string;
+  text: string;
 }
 
 const HEADING_RE = /^#{1,6}\s+(.+)$/;
@@ -29,19 +34,17 @@ export function splitSentences(text: string): string[] {
     .filter(Boolean);
 }
 
-/** Turn a text segment into ordered sentence units, tracking headings. */
-function buildUnits(segment: string): Unit[] {
-  const units: Unit[] = [];
-  let currentHeading: string | undefined;
-  let paragraph: string[] = [];
+/** Split a segment into heading-delimited sections. Text before the first heading
+ * (or a document with no headings) forms a single untitled section. */
+export function splitSections(segment: string): Section[] {
+  const sections: Section[] = [];
+  let heading: string | undefined;
+  let body: string[] = [];
 
   const flush = () => {
-    const text = paragraph.join(' ').replace(/\s+/g, ' ').trim();
-    paragraph = [];
-    if (!text) return;
-    for (const sentence of splitSentences(text)) {
-      units.push({ text: sentence, tokens: estimateTokens(sentence), heading: currentHeading });
-    }
+    const text = body.join('\n').trim();
+    body = [];
+    if (text) sections.push({ heading, text });
   };
 
   for (const raw of segment.split('\n')) {
@@ -49,16 +52,25 @@ function buildUnits(segment: string): Unit[] {
     const hm = HEADING_RE.exec(line);
     if (hm && hm[1]) {
       flush();
-      currentHeading = hm[1].trim();
+      heading = hm[1].trim();
       continue;
     }
-    if (line === '') {
-      flush();
-      continue;
-    }
-    paragraph.push(line);
+    body.push(line);
   }
   flush();
+  return sections;
+}
+
+/** Turn section text into ordered sentence units (paragraph-aware). */
+function buildUnits(text: string): Unit[] {
+  const units: Unit[] = [];
+  for (const para of text.split(/\n\s*\n/)) {
+    const joined = para.replace(/\s+/g, ' ').trim();
+    if (!joined) continue;
+    for (const sentence of splitSentences(joined)) {
+      units.push({ text: sentence, tokens: estimateTokens(sentence) });
+    }
+  }
   return units;
 }
 
@@ -77,14 +89,9 @@ function tailUnits(units: Unit[], budget: number): Unit[] {
   return out;
 }
 
-interface PackedChunk {
-  content: string;
-  heading?: string;
-}
-
 /** Greedily pack units into ~targetToken chunks with sentence overlap. */
-function packUnits(units: Unit[], cfg: ChunkStrategy): PackedChunk[] {
-  const chunks: PackedChunk[] = [];
+function packUnits(units: Unit[], cfg: ChunkStrategy): string[] {
+  const chunks: string[] = [];
   let i = 0;
   let overlap: Unit[] = [];
 
@@ -95,7 +102,6 @@ function packUnits(units: Unit[], cfg: ChunkStrategy): PackedChunk[] {
 
     while (i < units.length) {
       const u = units[i]!;
-      // Stop before exceeding target, but always include at least one new unit.
       if (current.length > firstNew && tokens + u.tokens > cfg.targetTokens) break;
       current.push(u);
       tokens += u.tokens;
@@ -103,10 +109,7 @@ function packUnits(units: Unit[], cfg: ChunkStrategy): PackedChunk[] {
       if (tokens >= cfg.targetTokens) break;
     }
 
-    const content = current.map((u) => u.text).join(' ').trim();
-    const heading = current[firstNew]?.heading ?? current[0]?.heading;
-    chunks.push({ content, heading });
-
+    chunks.push(current.map((u) => u.text).join(' ').trim());
     overlap = tailUnits(current, cfg.overlapTokens);
     if (current.length === firstNew) break; // safety: no new unit consumed
   }
@@ -123,20 +126,22 @@ export function chunkDocument(parsed: ParsedDocument, cfg: ChunkStrategy, ctx: C
   let idx = 0;
   for (const seg of segments) {
     if (!seg.text.trim()) continue;
-    for (const packed of packUnits(buildUnits(seg.text), cfg)) {
-      if (!packed.content) continue;
-      chunks.push({
-        documentId: ctx.documentId,
-        corpusId: ctx.corpusId,
-        corpusVersion: ctx.corpusVersion,
-        chunkIndex: idx++,
-        content: packed.content,
-        tokenCount: estimateTokens(packed.content),
-        pageStart: seg.page,
-        pageEnd: seg.page,
-        heading: packed.heading,
-        lang: detectChunkLang(packed.content),
-      });
+    for (const section of splitSections(seg.text)) {
+      for (const content of packUnits(buildUnits(section.text), cfg)) {
+        if (!content) continue;
+        chunks.push({
+          documentId: ctx.documentId,
+          corpusId: ctx.corpusId,
+          corpusVersion: ctx.corpusVersion,
+          chunkIndex: idx++,
+          content,
+          tokenCount: estimateTokens(content),
+          pageStart: seg.page,
+          pageEnd: seg.page,
+          heading: section.heading,
+          lang: detectChunkLang(content),
+        });
+      }
     }
   }
   return chunks;
