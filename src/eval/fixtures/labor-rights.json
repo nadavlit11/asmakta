@@ -1,0 +1,282 @@
+[
+  {
+    "question": "How many paid vacation days is an employee entitled to in the first years of employment?",
+    "lang": "en",
+    "category": "answerable",
+    "isAnswerable": true,
+    "goldAnswer": "In the first several years, an employee is entitled to 12 paid vacation days per year; the entitlement rises gradually with seniority.",
+    "expectedDocFilenames": ["annual-leave.en.md"]
+  },
+  {
+    "question": "Is an employee paid during annual leave?",
+    "lang": "en",
+    "category": "answerable",
+    "isAnswerable": true,
+    "goldAnswer": "Yes. An employee on annual leave receives their regular wage (holiday pay / dmei chufsha) for the leave period.",
+    "expectedDocFilenames": ["annual-leave.en.md"]
+  },
+  {
+    "question": "What happens to unused annual leave when employment ends?",
+    "lang": "en",
+    "category": "answerable",
+    "isAnswerable": true,
+    "goldAnswer": "On termination the employer pays the employee redemption (pidyon) for accrued leave days that were not taken.",
+    "expectedDocFilenames": ["annual-leave.en.md"]
+  },
+  {
+    "question": "How is annual leave calculated for part-time employees?",
+    "lang": "en",
+    "category": "answerable",
+    "isAnswerable": true,
+    "goldAnswer": "Part-time and hourly employees accrue annual leave in proportion to the scope of their employment (pro-rated relative to full-time).",
+    "expectedDocFilenames": ["annual-leave.en.md"]
+  },
+  {
+    "question": "Can an employer pay less than the minimum wage if the employee agrees?",
+    "lang": "en",
+    "category": "answerable",
+    "isAnswerable": true,
+    "goldAnswer": "No. An employer may not pay below the statutory minimum wage, and any agreement to pay less is not valid.",
+    "expectedDocFilenames": ["minimum-wage.en.md"]
+  },
+  {
+    "question": "How is the minimum wage expressed for hourly workers?",
+    "lang": "en",
+    "category": "answerable",
+    "isAnswerable": true,
+    "goldAnswer": "As a minimum hourly wage that applies to each hour worked; part-time employees are entitled to the minimum hourly wage for the hours they actually work.",
+    "expectedDocFilenames": ["minimum-wage.en.md"]
+  },
+  {
+    "question": "What must an employer do when the minimum wage is updated?",
+    "lang": "en",
+    "category": "answerable",
+    "isAnswerable": true,
+    "goldAnswer": "Apply the new rate from its effective date and raise the wages of employees whose pay is below the updated minimum.",
+    "expectedDocFilenames": ["minimum-wage.en.md"]
+  },
+  {
+    "question": "Can a minor be paid a reduced minimum wage?",
+    "lang": "en",
+    "category": "answerable",
+    "isAnswerable": true,
+    "goldAnswer": "Yes. Young workers (minors) and certain trainees may be subject to a reduced minimum wage that is a percentage of the adult minimum, according to their age bracket.",
+    "expectedDocFilenames": ["minimum-wage.en.md"]
+  },
+  {
+    "question": "How long is the standard full-time workweek?",
+    "lang": "en",
+    "category": "answerable",
+    "isAnswerable": true,
+    "goldAnswer": "The standard full-time workweek is 42 hours.",
+    "expectedDocFilenames": ["hours-and-rest.en.md"]
+  },
+  {
+    "question": "How is overtime paid?",
+    "lang": "en",
+    "category": "answerable",
+    "isAnswerable": true,
+    "goldAnswer": "The first two overtime hours in a day are paid at 125% of the regular hourly wage, and each additional overtime hour is paid at 150%.",
+    "expectedDocFilenames": ["hours-and-rest.en.md"]
+  },
+  {
+    "question": "What is the minimum weekly rest an employee is entitled to?",
+    "lang": "en",
+    "category": "answerable",
+    "isAnswerable": true,
+    "goldAnswer": "At least 36 consecutive hours of weekly rest.",
+    "expectedDocFilenames": ["hours-and-rest.en.md"]
+  },
+  {
+    "question": "For a Jewish employee, when does the weekly rest fall?",
+    "lang": "en",
+    "category": "answerable",
+    "isAnswerable": true,
+    "goldAnswer": "For Jewish employees the weekly rest includes Shabbat.",
+    "expectedDocFilenames": ["hours-and-rest.en.md"]
+  },
+  {
+    "question": "כמה זמן מראש חייב מעסיק להודיע לעובד בשכר חודשי לפני פיטורים, לאחר שנת עבודה מלאה?",
+    "lang": "he",
+    "category": "answerable",
+    "isAnswerable": true,
+    "goldAnswer": "לאחר שנת עבודה מלאה זכאי עובד בשכר חודשי להודעה מוקדמת של חודש ימים.",
+    "expectedDocFilenames": ["hodaa-mukdemet.he.md"]
+  },
+  {
+    "question": "כיצד מצטברת ההודעה המוקדמת בששת חודשי העבודה הראשונים לעובד חודשי?",
+    "lang": "he",
+    "category": "answerable",
+    "isAnswerable": true,
+    "goldAnswer": "בשיעור של יום אחד לכל חודש עבודה.",
+    "expectedDocFilenames": ["hodaa-mukdemet.he.md"]
+  },
+  {
+    "question": "מה משלם מעסיק שפיטר עובד בלי לתת הודעה מוקדמת?",
+    "lang": "he",
+    "category": "answerable",
+    "isAnswerable": true,
+    "goldAnswer": "תמורת הודעה מוקדמת בגובה השכר הרגיל שהיה משתלם בתקופת ההודעה.",
+    "expectedDocFilenames": ["hodaa-mukdemet.he.md"]
+  },
+  {
+    "question": "האם חובת ההודעה המוקדמת חלה גם על עובד שמתפטר?",
+    "lang": "he",
+    "category": "answerable",
+    "isAnswerable": true,
+    "goldAnswer": "כן. חובת ההודעה המוקדמת חלה על שני הצדדים — גם על מעסיק המפטר וגם על עובד המתפטר.",
+    "expectedDocFilenames": ["hodaa-mukdemet.he.md"]
+  },
+  {
+    "question": "מתי עובד זכאי לפיצויי פיטורים?",
+    "lang": "he",
+    "category": "answerable",
+    "isAnswerable": true,
+    "goldAnswer": "עובד שפוטר לאחר שהשלים שנת עבודה מלאה אצל אותו מעסיק או באותו מקום עבודה זכאי לפיצויי פיטורים.",
+    "expectedDocFilenames": ["pitzuei-piturim.he.md"]
+  },
+  {
+    "question": "מהו שיעור פיצויי הפיטורים הבסיסי?",
+    "lang": "he",
+    "category": "answerable",
+    "isAnswerable": true,
+    "goldAnswer": "שכר חודש אחד עבור כל שנת עבודה, ובאופן יחסי עבור חלק של שנה.",
+    "expectedDocFilenames": ["pitzuei-piturim.he.md"]
+  },
+  {
+    "question": "מה המשמעות של הסדר לפי סעיף 14 לעניין פיצויי פיטורים?",
+    "lang": "he",
+    "category": "answerable",
+    "isAnswerable": true,
+    "goldAnswer": "הפקדות המעסיק לקופת הפיצויים באות במקום חלק מפיצויי הפיטורים או במקומם, והעובד זכאי לכספים שנצברו בקופה גם אם התפטר.",
+    "expectedDocFilenames": ["pitzuei-piturim.he.md"]
+  },
+  {
+    "question": "האם עובד שהתפטר יכול להיות זכאי לפיצויי פיטורים?",
+    "lang": "he",
+    "category": "answerable",
+    "isAnswerable": true,
+    "goldAnswer": "כן, בנסיבות מסוימות — למשל התפטרות עקב הרעה מוחשית בתנאי העבודה, או התפטרות של הורה לאחר לידה בתנאים הקבועים בחוק.",
+    "expectedDocFilenames": ["pitzuei-piturim.he.md"]
+  },
+  {
+    "question": "מתי קמה הזכאות לדמי הבראה?",
+    "lang": "he",
+    "category": "answerable",
+    "isAnswerable": true,
+    "goldAnswer": "לאחר שהעובד השלים שנת עבודה מלאה אצל המעסיק.",
+    "expectedDocFilenames": ["dmei-havraa.he.md"]
+  },
+  {
+    "question": "כיצד משתנה מספר ימי ההבראה לשנה?",
+    "lang": "he",
+    "category": "answerable",
+    "isAnswerable": true,
+    "goldAnswer": "מספר ימי ההבראה לשנה עולה עם הוותק של העובד.",
+    "expectedDocFilenames": ["dmei-havraa.he.md"]
+  },
+  {
+    "question": "כיצד מחושב גובה דמי ההבראה?",
+    "lang": "he",
+    "category": "answerable",
+    "isAnswerable": true,
+    "goldAnswer": "לפי מספר ימי ההבראה שצבר העובד כפול תעריף יום הבראה.",
+    "expectedDocFilenames": ["dmei-havraa.he.md"]
+  },
+  {
+    "question": "האם עובד במשרה חלקית זכאי לדמי הבראה?",
+    "lang": "he",
+    "category": "answerable",
+    "isAnswerable": true,
+    "goldAnswer": "כן, באופן יחסי להיקף משרתו.",
+    "expectedDocFilenames": ["dmei-havraa.he.md"]
+  },
+  {
+    "question": "What is the minimum wage in France?",
+    "lang": "en",
+    "category": "trap",
+    "isAnswerable": false,
+    "goldAnswer": null,
+    "expectedDocFilenames": []
+  },
+  {
+    "question": "How many paid sick days is an employee entitled to per year?",
+    "lang": "en",
+    "category": "trap",
+    "isAnswerable": false,
+    "goldAnswer": null,
+    "expectedDocFilenames": []
+  },
+  {
+    "question": "What are the mandatory pension contribution rates for employers and employees?",
+    "lang": "en",
+    "category": "trap",
+    "isAnswerable": false,
+    "goldAnswer": null,
+    "expectedDocFilenames": []
+  },
+  {
+    "question": "How many public holidays are observed in Japan?",
+    "lang": "en",
+    "category": "trap",
+    "isAnswerable": false,
+    "goldAnswer": null,
+    "expectedDocFilenames": []
+  },
+  {
+    "question": "כמה ימי מחלה בתשלום מגיעים לעובד בשנה?",
+    "lang": "he",
+    "category": "trap",
+    "isAnswerable": false,
+    "goldAnswer": null,
+    "expectedDocFilenames": []
+  },
+  {
+    "question": "מה גובה דמי האבטלה למי שפוטר מעבודתו?",
+    "lang": "he",
+    "category": "trap",
+    "isAnswerable": false,
+    "goldAnswer": null,
+    "expectedDocFilenames": []
+  },
+  {
+    "question": "כמה ימי חופשה שנתית מגיעים לפי חוק העבודה בגרמניה?",
+    "lang": "he",
+    "category": "trap",
+    "isAnswerable": false,
+    "goldAnswer": null,
+    "expectedDocFilenames": []
+  },
+  {
+    "question": "מהו שיעור ההפרשה לפנסיה חובה בישראל?",
+    "lang": "he",
+    "category": "trap",
+    "isAnswerable": false,
+    "goldAnswer": null,
+    "expectedDocFilenames": []
+  },
+  {
+    "question": "After the standard workweek, how are the first overtime hours paid, and what is the minimum weekly rest?",
+    "lang": "en",
+    "category": "multi_hop",
+    "isAnswerable": true,
+    "goldAnswer": "The first two overtime hours in a day are paid at 125% of the regular hourly wage, and the minimum weekly rest is at least 36 consecutive hours.",
+    "expectedDocFilenames": ["hours-and-rest.en.md"]
+  },
+  {
+    "question": "Is annual leave paid, and what happens to unused leave when employment ends?",
+    "lang": "en",
+    "category": "multi_hop",
+    "isAnswerable": true,
+    "goldAnswer": "Annual leave is paid at the employee's regular wage, and on termination the employer pays redemption (pidyon) for accrued leave days that were not taken.",
+    "expectedDocFilenames": ["annual-leave.en.md"]
+  },
+  {
+    "question": "עובד בשכר חודשי שהשלים שלוש שנים ופוטר — מהו אורך ההודעה המוקדמת שלו ומהו שיעור פיצויי הפיטורים המגיעים לו?",
+    "lang": "he",
+    "category": "multi_hop",
+    "isAnswerable": true,
+    "goldAnswer": "הודעה מוקדמת של חודש ימים (לאחר שנת עבודה מלאה), ופיצויי פיטורים בשיעור שכר חודש עבור כל שנת עבודה — כשלושה חודשי שכר עבור שלוש שנים.",
+    "expectedDocFilenames": ["hodaa-mukdemet.he.md", "pitzuei-piturim.he.md"]
+  }
+]
