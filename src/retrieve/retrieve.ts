@@ -19,7 +19,10 @@ export interface RetrievalConfig {
 
 export const DEFAULT_RETRIEVAL: Omit<RetrievalConfig, 'corpusId' | 'corpusVersion'> = {
   topK: 5,
-  minSimilarity: 0.55,
+  // Tuned against the eval: voyage-4-lite cosine sims for correct matches sit at
+  // ~0.35-0.57 (Hebrew lower), so 0.55 over-refused. 0.30 is a coarse pre-filter;
+  // the LLM guardrail does the real "does this answer the question" judgment.
+  minSimilarity: 0.3,
   rerank: false,
   rerankTopN: 30,
 };
