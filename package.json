@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "tsx watch src/api/server.ts",
     "start": "tsx src/api/server.ts",
-    "build": "npm --prefix web install && npm --prefix web run build",
+    "build": "npm --prefix web install --include=dev && npm --prefix web run build",
     "deploy:setup": "npm run migrate && npm run seed:corpus && npm run seed:fixtures",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
