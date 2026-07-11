@@ -278,5 +278,101 @@
     "isAnswerable": true,
     "goldAnswer": "הודעה מוקדמת של חודש ימים (לאחר שנת עבודה מלאה), ופיצויי פיטורים בשיעור שכר חודש עבור כל שנת עבודה — כשלושה חודשי שכר עבור שלוש שנים.",
     "expectedDocFilenames": ["hodaa-mukdemet.he.md", "pitzuei-piturim.he.md"]
+  },
+  {
+    "question": "What is the length of the statutory probationary period for a new employee?",
+    "lang": "en",
+    "category": "trap",
+    "isAnswerable": false,
+    "goldAnswer": null,
+    "expectedDocFilenames": []
+  },
+  {
+    "question": "האם עובד זכאי לתשלום עבור משכורת שלושה עשר?",
+    "lang": "he",
+    "category": "trap",
+    "isAnswerable": false,
+    "goldAnswer": null,
+    "expectedDocFilenames": []
+  },
+  {
+    "question": "How many days of paid paternity leave is a father entitled to?",
+    "lang": "en",
+    "category": "trap",
+    "isAnswerable": false,
+    "goldAnswer": null,
+    "expectedDocFilenames": []
+  },
+  {
+    "question": "כמה ימי מילואים בתשלום מגיעים לעובד בשנה?",
+    "lang": "he",
+    "category": "trap",
+    "isAnswerable": false,
+    "goldAnswer": null,
+    "expectedDocFilenames": []
+  },
+  {
+    "question": "Is it lawful to pay a worker below the statutory floor if the worker agrees to it in writing?",
+    "lang": "en",
+    "category": "answerable",
+    "isAnswerable": true,
+    "goldAnswer": "No. An employer may not pay below the statutory minimum wage, and any agreement to pay less is not valid.",
+    "expectedDocFilenames": ["minimum-wage.en.md"]
+  },
+  {
+    "question": "פוטרתי לאחר ארבע שנות עבודה מלאות — כמה חודשי פיצויי פיטורים מגיעים לי?",
+    "lang": "he",
+    "category": "answerable",
+    "isAnswerable": true,
+    "goldAnswer": "פיצויי פיטורים בשיעור שכר חודש עבור כל שנת עבודה — כלומר כארבע משכורות חודשיות עבור ארבע שנים.",
+    "expectedDocFilenames": ["pitzuei-piturim.he.md"]
+  },
+  {
+    "question": "כיצד נקבע הסכום שמקבל העובד עבור דמי הבראה?",
+    "lang": "he",
+    "category": "answerable",
+    "isAnswerable": true,
+    "goldAnswer": "לפי מספר ימי ההבראה שצבר העובד כפול תעריף יום הבראה.",
+    "expectedDocFilenames": ["dmei-havraa.he.md"]
+  },
+  {
+    "question": "Do part-time staff earn paid vacation, and if so how is it determined?",
+    "lang": "en",
+    "category": "answerable",
+    "isAnswerable": true,
+    "goldAnswer": "Yes. Part-time and hourly employees accrue annual leave in proportion to their employment scope (pro-rated relative to full-time).",
+    "expectedDocFilenames": ["annual-leave.en.md"]
+  },
+  {
+    "question": "עובד שהתפטר עקב הרעה מוחשית בתנאי עבודתו לאחר שלוש שנים — האם הוא זכאי לפיצויי פיטורים?",
+    "lang": "he",
+    "category": "multi_hop",
+    "isAnswerable": true,
+    "goldAnswer": "כן. התפטרות עקב הרעה מוחשית בתנאי העבודה מזכה את העובד בפיצויי פיטורים, בשיעור שכר חודש עבור כל שנת עבודה.",
+    "expectedDocFilenames": ["pitzuei-piturim.he.md"]
+  },
+  {
+    "question": "Is the pay rate for the third overtime hour in a day higher than for the first overtime hour?",
+    "lang": "en",
+    "category": "multi_hop",
+    "isAnswerable": true,
+    "goldAnswer": "Yes. The first two overtime hours in a day are paid at 125% of the regular hourly wage, while each additional overtime hour (the third and beyond) is paid at 150%.",
+    "expectedDocFilenames": ["hours-and-rest.en.md"]
+  },
+  {
+    "question": "מהו שכר המינימום ומי קובע אותו?",
+    "lang": "he",
+    "category": "cross_lingual",
+    "isAnswerable": true,
+    "goldAnswer": "החוק מבטיח שכר מינימום, ומעסיק אינו רשאי לשלם פחות מהמינימום הקבוע בחוק.",
+    "expectedDocFilenames": ["minimum-wage.en.md"]
+  },
+  {
+    "question": "After a full year of employment, how much advance notice of termination must a monthly-salaried employee receive?",
+    "lang": "en",
+    "category": "cross_lingual",
+    "isAnswerable": true,
+    "goldAnswer": "One month's advance notice.",
+    "expectedDocFilenames": ["hodaa-mukdemet.he.md"]
   }
 ]

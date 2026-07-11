@@ -21,7 +21,7 @@ const FixtureSchema = z
   .object({
     question: z.string().min(1),
     lang: z.enum(['he', 'en']),
-    category: z.enum(['answerable', 'trap', 'multi_hop']),
+    category: z.enum(['answerable', 'trap', 'multi_hop', 'cross_lingual']),
     isAnswerable: z.boolean(),
     goldAnswer: z.string().nullable(),
     expectedDocFilenames: z.array(z.string()),

@@ -7,7 +7,7 @@
  * deterministic and cheap, and makes the whole rubric unit-testable.
  */
 
-export type Category = 'answerable' | 'trap' | 'multi_hop';
+export type Category = 'answerable' | 'trap' | 'multi_hop' | 'cross_lingual';
 
 export interface FixtureLike {
   isAnswerable: boolean;
