@@ -2,7 +2,7 @@
 
 One of Nadav's freelance portfolio projects (backend dev going freelance; portfolio strategy derived from a July 2026 XPlace market scan).
 
-**Current state: implementation plan complete → [`docs/plan.md`](docs/plan.md). Planning is done; the next task is implementation, by fresh Opus 4.8 sessions.** When Nadav says "run", "start", "build", or "next commit" — read `docs/plan.md` and execute its commit sequence (§8) in order: one `/kit:worktree` branch per commit, each commit's done-probe passing, `/kit:code-review` before every commit. From commit C9 onward, any change to prompts/retrieval/chunking/rerank must re-run `npm run eval` and report the pass-rate in the commit body. `BRIEF.md` holds the original planning brief (historical context).
+**Current state: implemented and merged to `main` (plan C1–C15). The app is built** — ingestion → pgvector retrieval → answer-with-citations guardrail → eval harness, Fastify API, and the bilingual React UI. Eval passes 47/47 (100%, target 90%). Remaining: deploy to hosting (Neon + a host — needs Nadav's accounts); optionally swap the illustrative demo corpus for authoritative sources. Ongoing rule: any change to prompts/retrieval/chunking/rerank must re-run `npm run eval` and report the pass-rate in the commit body; use `/kit:worktree` + `/kit:code-review` for new work. `docs/plan.md` is the design reference; `BRIEF.md` is the original planning brief (historical).
 
 ## Durable project rules
 
