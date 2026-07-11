@@ -1,0 +1,22 @@
+# Local Postgres + pgvector for development. Neon is the intended prod host
+# (pgvector on every plan). Start: `docker compose up -d`, then set
+# DATABASE_URL=postgresql://asmakta:asmakta@127.0.0.1:5432/asmakta
+services:
+  db:
+    image: pgvector/pgvector:pg17
+    environment:
+      POSTGRES_USER: asmakta
+      POSTGRES_PASSWORD: asmakta
+      POSTGRES_DB: asmakta
+    ports:
+      - '5432:5432'
+    volumes:
+      - asmakta_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U asmakta -d asmakta']
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  asmakta_pgdata:
