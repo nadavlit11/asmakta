@@ -10,6 +10,8 @@
   "scripts": {
     "dev": "tsx watch src/api/server.ts",
     "start": "tsx src/api/server.ts",
+    "build": "npm --prefix web install && npm --prefix web run build",
+    "deploy:setup": "npm run migrate && npm run seed:corpus && npm run seed:fixtures",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -26,10 +28,12 @@
     "@anthropic-ai/sdk": "^0.110.0",
     "@fastify/cors": "^10.0.1",
     "@fastify/multipart": "^9.0.1",
+    "@fastify/static": "^8.0.3",
     "cheerio": "^1.0.0",
     "fastify": "^5.2.0",
     "mammoth": "^1.8.0",
     "pg": "^8.13.1",
+    "tsx": "^4.19.2",
     "unpdf": "^0.12.1",
     "voyageai": "^0.4.0",
     "zod": "^3.24.1"
@@ -37,7 +41,6 @@
   "devDependencies": {
     "@types/node": "^22.10.5",
     "@types/pg": "^8.11.10",
-    "tsx": "^4.19.2",
     "typescript": "^5.7.3",
     "vitest": "^2.1.8"
   }
